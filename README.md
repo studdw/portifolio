@@ -12,52 +12,6 @@ Design minimalista em **branco e laranja**.
 | `/projetos/:slug` | **Página de detalhe**: problema, solução, processo, código, telas, resultados e stack |
 | `/experiencia` | Timeline profissional e competências |
 
-## Rodar localmente
-
-```bash
-npm install
-npm run dev
-```
-
-Abre em `http://localhost:5173`.
-
-## Build
-
-```bash
-npm run build
-npm run preview
-```
-
-## Deploy na Vercel
-
-1. Suba a pasta para um repositório no GitHub.
-2. Na Vercel: **Add New → Project → Import** o repositório.
-3. A Vercel detecta o preset **Vite** sozinha (build `npm run build`, output `dist`).
-4. Deploy.
-
-O `vercel.json` já traz o *rewrite* de SPA, então `/projetos/dashboard-budget` funciona ao recarregar.
-
-## Onde editar o conteúdo
-
-Tudo está em **`src/data/content.js`**. Cada projeto tem:
-
-```js
-{
-  slug,        // url da página de detalhe
-  title, year, role, summary, highlights, tags,
-  problem,     // contexto e dor
-  solution,    // como foi resolvido
-  process,     // [{ title, text }] → timeline numerada
-  results,     // [{ value, label }] → cards de resultado
-  gallery,     // [{ src, caption }] → imagens com lightbox
-  code,        // [{ label, language, description, snippet }] → blocos em abas
-  stackDetail, // [{ name, use }]
-}
-```
-
-Para adicionar um projeto novo, basta acrescentar um objeto nesse array — a rota,
-o card e a página de detalhe são gerados automaticamente.
-
 ## Estrutura
 
 ```
