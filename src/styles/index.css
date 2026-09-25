@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink-900 font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-orange-500 text-white;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-6 md:px-10;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-ink-100 bg-white px-4 py-2 text-sm text-ink-700 transition-colors duration-200 hover:border-orange-500 hover:text-orange-600;
+  }
+  .tag {
+    @apply inline-flex items-center rounded-full bg-orange-50 px-3 py-1 text-xs font-medium text-orange-700;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-orange-500;
+  }
+  .link-underline {
+    @apply relative text-ink-900 transition-colors duration-200 hover:text-orange-600;
+  }
+}
+
+/* marquee de skills */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+/* barra de rolagem dos blocos de código */
+.code-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.code-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.code-scroll::-webkit-scrollbar-thumb {
+  background: #3D3D3D;
+  border-radius: 999px;
+}
