@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 
 const links = [
-  { to: '/', label: 'início' },
-  { to: '/sobre', label: 'sobre' },
-  { to: '/projetos', label: 'projetos' },
-  { to: '/experiencia', label: 'experiência' },
+  { to: '/', label: 'Início' },
+  { to: '/sobre', label: 'Sobre' },
+  { to: '/projetos', label: 'Projetos' },
+  { to: '/experiencia', label: 'Experiência' },
 ]
 
 export default function Navbar() {
