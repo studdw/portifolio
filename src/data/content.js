@@ -31,6 +31,27 @@ export const stack = [
   'Claude',
 ]
 
+export const stackGroups = [
+  {
+    id: 'dados',
+    label: 'Dados & BI',
+    descricao: 'Modelagem, indicadores e visualização para decisão.',
+    items: ['Power BI', 'DAX', 'SQL', 'SQLite', 'Excel Avançado', 'Big Data', 'Power Query'],
+  },
+  {
+    id: 'dev',
+    label: 'Desenvolvimento',
+    descricao: 'Da automação de coleta à interface que o time usa.',
+    items: ['Python', 'Java', 'Streamlit', 'Playwright', 'Pandas'],
+  },
+  {
+    id: 'plataformas',
+    label: 'Plataformas',
+    descricao: 'Onde os processos rodam e os dados moram.',
+    items: ['Power Automate', 'SharePoint', 'Microsoft Forms', 'SAP', 'AWS', 'Microsoft 365', 'Vercel'],
+  },
+]
+
 export const stats = [
   { value: '4', label: 'projetos de dados e automação entregues' },
   { value: '3', label: 'frentes: BI, automação e inteligência de mercado' },
@@ -680,6 +701,32 @@ def cagr(valor_inicial: float, valor_final: float, anos: int) -> float:
 ]
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug)
+
+// -------------------------- ASK ME ---------------------------
+
+export const askMe = {
+  avatar: 'assets/avatar.jpg',
+  titulo: 'Pergunte pra mim',
+  subtitulo: 'Respostas rápidas sobre como eu trabalho',
+  placeholder: 'Escolha uma pergunta abaixo 👇',
+  perguntas: [
+    {
+      pergunta: 'Como você começa um projeto novo?',
+      resposta:
+        'Entendendo a dor antes da ferramenta. Pergunto quem usa, com que frequência e o que trava hoje só depois decido se aquilo vira um painel, um fluxo automatizado ou um script. Muita coisa que parece problema de tecnologia é, na real, problema de processo.',
+    },
+    {
+      pergunta: 'O que você faz na Libbs?',
+      resposta:
+        'Atuo na Gerência de Novos Produtos, dentro da Diretoria de Inovação. Na prática, sustento decisões de portfólio com análise de mercado e construo as ferramentas que o time usa: dashboards em Power BI, automações em Power Automate e aplicações próprias em Python.',
+    },
+    {
+      pergunta: 'Dados ou desenvolvimento?',
+      resposta:
+        'Os dois e é justamente aí que eu rendo mais. Analisar bem me diz o que precisa existir; saber desenvolver me permite construir. Entregar o número junto com a ferramenta que o mantém atualizado vale muito mais do que só entregar o slide.',
+    },
+  ],
+}
 
 // ------------------------ CERTIFICAÇÕES ------------------------
 
