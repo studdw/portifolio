@@ -30,7 +30,7 @@ export default {
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       maxWidth: {
-        content: '1120px',
+        content: '2000px',
       },
     },
   },

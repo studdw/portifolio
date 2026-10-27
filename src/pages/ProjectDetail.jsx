@@ -5,6 +5,8 @@ import CodeBlock from '../components/CodeBlock.jsx'
 import Gallery from '../components/Gallery.jsx'
 import ResultStats from '../components/ResultStats.jsx'
 import Timeline from '../components/Timeline.jsx'
+import VersionTimeline from '../components/VersionTimeline.jsx'
+import { ProjectCover } from '../components/ProjectCard.jsx'
 import { getProject, projects } from '../data/content.js'
 
 function Bloco({ eyebrow, title, children, className = '' }) {
@@ -66,6 +68,16 @@ export default function ProjectDetail() {
         </div>
 
         <p className="mt-10 max-w-3xl text-lg leading-relaxed text-ink-700">{project.summary}</p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+          className="relative mt-12"
+        >
+          <div className="absolute -inset-x-6 -bottom-6 top-10 -z-10 rounded-[2rem] bg-gradient-to-b from-orange-50 to-transparent" />
+          <ProjectCover project={project} />
+        </motion.div>
       </section>
 
       {/* CONTEXTO */}
@@ -79,6 +91,13 @@ export default function ProjectDetail() {
           <p className="mt-5 text-[15px] leading-[1.8] text-orange-50">{project.solution}</p>
         </div>
       </section>
+
+      {/* EVOLUÇÃO ENTRE VERSÕES */}
+      {project.versions && (
+        <Bloco eyebrow="Evolução" title="Linha do tempo do projeto">
+          <VersionTimeline versions={project.versions} changes={project.changes} />
+        </Bloco>
+      )}
 
       {/* COMO FOI CONSTRUÍDO */}
       <Bloco eyebrow="Processo" title="Como foi construído">

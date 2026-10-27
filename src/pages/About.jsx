@@ -19,7 +19,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="text-[17px] leading-[1.8] text-ink-700"
+              className="text-[17px] leading-[1.8] text-ink-700 xl:text-lg"
             >
               {p}
             </motion.p>

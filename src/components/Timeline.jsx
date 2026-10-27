@@ -19,7 +19,7 @@ export default function Timeline({ steps }) {
             {i + 1}
           </span>
           <h4 className="font-semibold tracking-tight">{step.title}</h4>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-500">{step.text}</p>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-500">{step.text}</p>
         </motion.li>
       ))}
     </ol>

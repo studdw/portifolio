@@ -38,7 +38,7 @@ export default function Experience() {
 
               <p className="mt-3 text-lg text-ink-900">{job.role}</p>
               <p className="mt-1 text-sm text-ink-500">{job.area}</p>
-              <p className="mt-6 max-w-2xl text-[15px] leading-[1.8] text-ink-700">{job.description}</p>
+              <p className="mt-6 max-w-4xl text-base leading-[1.8] text-ink-700">{job.description}</p>
 
               <ul className="mt-7 grid gap-3 md:grid-cols-2">
                 {job.bullets.map((b) => (

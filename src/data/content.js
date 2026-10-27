@@ -53,7 +53,7 @@ export const stackGroups = [
 ]
 
 export const stats = [
-  { value: '4', label: 'projetos de dados e automação entregues' },
+  { value: '5', label: 'projetos de dados, IA e automação entregues' },
   { value: '3', label: 'frentes: BI, automação e inteligência de mercado' },
   { value: '100%', label: 'foco em processo que roda sozinho' },
 ]
@@ -105,167 +105,351 @@ export const about = {
 export const projects = [
   {
     slug: 'pesquisa-de-precos',
-    title: 'Sistema de Pesquisa de Preços',
+    title: 'Pesquisa de Preços por Molécula',
     year: '2026',
+    category: 'Desenvolvimento',
+    badge: 'v2 no ar',
+    cover: '/assets/precos-v2-02.png',
     role: 'Concepção, desenvolvimento e deploy',
     summary:
-      'Aplicação que coleta, trata e compara preços de produtos automaticamente, substituindo uma coleta manual recorrente por um painel consultável pelo time.',
+      'Aplicação web que pesquisa preços de medicamentos por molécula em fontes reais — base oficial CMED/Anvisa, API da Drogaria São Paulo e HTML da Ultrafarma — e entrega uma planilha Excel pronta para uso.',
     highlights: [
-      'Coleta automatizada com Playwright e tratamento em Python',
-      'Interface em Streamlit com filtros e exportação',
-      'Deploy com variáveis de ambiente e acesso interno',
+      'Dados reais: CMED/Anvisa, API da Drogaria São Paulo e extração do HTML da Ultrafarma',
+      'Até 15 moléculas por busca, com cache e filtros por farmácia e laboratório',
+      'Exportação para Excel pronta para análise · deploy na Vercel',
     ],
-    tags: ['Python', 'Playwright', 'Streamlit', 'Automação'],
+    tags: ['React', 'Python', 'APIs', 'Web Scraping', 'Vercel', 'Excel'],
 
     problem:
-      'O acompanhamento de preços de produtos era feito manualmente: abrir cada fonte, copiar valores, colar em planilha e repetir o processo a cada ciclo de pesquisa. Além de consumir horas, o método gerava inconsistência de formato e dificultava qualquer comparação histórica.',
+      'O acompanhamento de preços de medicamentos era feito manualmente: abrir cada farmácia, buscar molécula por molécula, copiar valores e montar planilha. A primeira versão automatizou isso com IA lendo as páginas, mas a IA às vezes interpretava errado ou "inventava" apresentações — e número de preço não pode ser aproximado.',
     solution:
-      'Construí uma aplicação que executa a coleta de forma automatizada, normaliza os dados em uma estrutura única e entrega tudo em uma interface web com filtros, comparativos e exportação para Excel. O time deixou de coletar e passou apenas a consultar.',
+      'Reconstruí o sistema do zero usando apenas fontes estruturadas: a tabela oficial CMED/Anvisa como referência de preço máximo (PMC), a API pública da Drogaria São Paulo e a extração direta do HTML da Ultrafarma. Os resultados são normalizados em uma tabela única, com laboratório identificado, desconto e preço unitário, e saem em um Excel pronto para o time usar.',
+
+    versions: [
+      {
+        version: 'v1',
+        date: 'Primeira versão',
+        status: 'descontinuada',
+        title: 'Protótipo com IA lendo as páginas',
+        text:
+          'Streamlit + Playwright abriam a busca de cada farmácia e um modelo de IA (Gemini) interpretava a página para montar o relatório. Funcionou como prova de conceito, mas dependia da leitura da IA.',
+        points: [
+          'Interface em Streamlit com chave de API da IA',
+          'Coleta via navegador automatizado (Playwright)',
+          'IA extraía produto, apresentação e preço',
+          'Resultados precisavam de conferência manual',
+        ],
+        image: '/assets/precos-01.png',
+      },
+      {
+        version: 'v2',
+        date: 'Versão atual',
+        status: 'no ar',
+        title: 'Bases reais, aplicação própria e deploy na Vercel',
+        text:
+          'Reescrita completa: sem IA no caminho do número. Cada fonte é lida da forma mais confiável possível e o resultado vira uma tabela única com exportação direta para Excel.',
+        points: [
+          'CMED/Anvisa como base oficial de preço (PMC)',
+          'API da Drogaria São Paulo e HTML da Ultrafarma',
+          'Até 15 moléculas por busca, com cache',
+          'Excel pronto para uso com um clique',
+        ],
+        image: '/assets/precos-v2-01.png',
+      },
+    ],
+
+    changes: [
+      { label: 'Origem dos dados', before: 'IA interpretando a página', after: 'CMED oficial, API e HTML estruturado' },
+      { label: 'Confiabilidade', before: 'Conferência manual necessária', after: 'Preço exatamente como na fonte' },
+      { label: 'Busca', before: '1 molécula por vez', after: 'Até 15 moléculas de uma vez' },
+      { label: 'Entrega', before: 'Relatório para revisar', after: 'Planilha Excel pronta para uso' },
+      { label: 'Acesso', before: 'App Streamlit local', after: 'Aplicação web na Vercel com login' },
+    ],
 
     process: [
       {
-        title: 'Mapeamento das fontes',
-        text: 'Levantei quais fontes eram consultadas manualmente, quais campos importavam e qual a frequência real de atualização.',
+        title: 'Lições da v1',
+        text: 'Mapeei onde a primeira versão errava: quase sempre na interpretação da IA (apresentação trocada, preço promocional confundido). A conclusão foi tirar a IA do caminho do número.',
       },
       {
-        title: 'Coleta automatizada',
-        text: 'Implementei a navegação e extração com Playwright, lidando com carregamento dinâmico, timeouts e variações de layout entre páginas.',
+        title: 'Escolha das fontes',
+        text: 'Para cada fonte, a forma mais estável de leitura: arquivo oficial da CMED/Anvisa, API pública da Drogaria São Paulo e parsing direto do HTML da Ultrafarma.',
       },
       {
-        title: 'Tratamento e normalização',
-        text: 'Padronização de nomes de produto, conversão de preços para formato numérico, deduplicação e marcação de data de coleta.',
+        title: 'Normalização',
+        text: 'Todas as fontes convergem para o mesmo formato: molécula, farmácia, produto, laboratório, quantidade, preço, preço "de", desconto e preço unitário.',
       },
       {
-        title: 'Interface e entrega',
-        text: 'Painel em Streamlit com filtros por produto e período, tabela comparativa e botão de exportação para Excel.',
+        title: 'Interface',
+        text: 'Busca de várias moléculas de uma vez, seleção de farmácias, cartões-resumo por molécula (menor preço, média, máximo, laboratórios) e tabela com filtros.',
       },
       {
-        title: 'Deploy',
-        text: 'Publicação com variáveis de ambiente em .env para credenciais e configuração, disponibilizando o acesso ao time.',
+        title: 'Excel e deploy',
+        text: 'Exportação da tabela filtrada para Excel pronta para uso e publicação na Vercel com acesso por login e cache para não repetir buscas.',
       },
     ],
 
     results: [
-      { value: 'Horas → minutos', label: 'tempo do ciclo de coleta' },
-      { value: '1 base única', label: 'substituiu planilhas dispersas' },
-      { value: 'Histórico', label: 'comparação entre coletas passou a existir' },
+      { value: '3 fontes reais', label: 'CMED/Anvisa, Drogaria São Paulo e Ultrafarma' },
+      { value: '0 IA no preço', label: 'número sempre igual ao da fonte' },
+      { value: '1 clique', label: 'da busca à planilha Excel pronta' },
     ],
 
     gallery: [
-      { src: '/assets/precos-01.png', caption: 'Painel principal com filtros e tabela comparativa de preços.' },
-      { src: '/assets/precos-02.png', caption: 'Exportação da base tratada para Excel.' },
+      { src: '/assets/precos-v2-01.png', caption: 'v2 — busca de várias moléculas e seleção das farmácias.' },
+      { src: '/assets/precos-v2-02.png', caption: 'v2 — resumo por molécula e tabela com filtros e exportação para Excel.' },
+      { src: '/assets/precos-01.png', caption: 'v1 — protótipo em Streamlit com IA (descontinuado).' },
+      { src: '/assets/precos-02.png', caption: 'v1 — relatório gerado pela IA, que exigia conferência.' },
     ],
 
     code: [
       {
-        label: 'Coleta com Playwright',
+        label: 'Base CMED/Anvisa',
         language: 'python',
         description:
-          'Função de coleta que abre a página, aguarda o carregamento dinâmico e extrai os campos relevantes.',
-        snippet: `from playwright.sync_api import sync_playwright
+          'Leitura da lista oficial de preços da CMED e filtro pela molécula, usando o PMC como referência de preço máximo ao consumidor.',
+        snippet: `import pandas as pd
 
-def coletar_precos(fontes: list[dict]) -> list[dict]:
-    """Percorre as fontes configuradas e extrai nome e preco de cada item."""
-    registros = []
+def buscar_cmed(base: pd.DataFrame, molecula: str) -> list[dict]:
+    """Filtra a lista CMED pelo princípio ativo e devolve no formato padrão."""
+    alvo = molecula.strip().upper()
+    achados = base[base["SUBSTANCIA"].str.upper().str.contains(alvo, na=False)]
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-
-        for fonte in fontes:
-            page.goto(fonte["url"], wait_until="networkidle", timeout=60_000)
-            page.wait_for_selector(fonte["seletor_item"])
-
-            for item in page.query_selector_all(fonte["seletor_item"]):
-                nome = item.query_selector(fonte["seletor_nome"])
-                preco = item.query_selector(fonte["seletor_preco"])
-                if not nome or not preco:
-                    continue
-
-                registros.append({
-                    "fonte": fonte["nome"],
-                    "produto": nome.inner_text().strip(),
-                    "preco_bruto": preco.inner_text().strip(),
-                })
-
-        browser.close()
-
-    return registros`,
+    return [
+        {
+            "molecula": molecula.title(),
+            "farmacia": "CMED/Anvisa (PMC)",
+            "produto": f'{row["PRODUTO"]} {row["APRESENTACAO"]}',
+            "laboratorio": row["LABORATORIO"],
+            "quantidade": extrair_quantidade(row["APRESENTACAO"]),
+            "preco": row["PMC 0%"],
+        }
+        for _, row in achados.iterrows()
+    ]`,
       },
       {
-        label: 'Tratamento dos dados',
+        label: 'API Drogaria São Paulo',
         language: 'python',
         description:
-          'Normalização do preço em texto para valor numérico e padronização da base antes de salvar.',
-        snippet: `import re
-import pandas as pd
-from datetime import date
+          'Consulta à API de busca da farmácia, já devolvendo preço, preço "de" e marca estruturados — sem interpretar página.',
+        snippet: `import httpx
 
-def normalizar_preco(texto: str) -> float | None:
-    """'R$ 1.234,56' -> 1234.56"""
-    limpo = re.sub(r"[^\\d,.]", "", texto).replace(".", "").replace(",", ".")
-    try:
-        return round(float(limpo), 2)
-    except ValueError:
-        return None
-
-def montar_base(registros: list[dict]) -> pd.DataFrame:
-    df = pd.DataFrame(registros)
-    df["preco"] = df["preco_bruto"].apply(normalizar_preco)
-    df["produto"] = df["produto"].str.upper().str.strip()
-    df["data_coleta"] = date.today()
-
-    df = (
-        df.dropna(subset=["preco"])
-          .drop_duplicates(subset=["fonte", "produto", "data_coleta"])
-          .sort_values(["produto", "preco"])
-          .reset_index(drop=True)
+def buscar_drogaria_sp(molecula: str) -> list[dict]:
+    resp = httpx.get(
+        DSP_SEARCH_URL,
+        params={"q": molecula, "page": 1, "size": 50},
+        timeout=20,
     )
-    return df`,
+    resp.raise_for_status()
+
+    itens = []
+    for p in resp.json().get("products", []):
+        oferta = p["items"][0]["sellers"][0]["commertialOffer"]
+        if not oferta["AvailableQuantity"]:
+            continue
+        itens.append({
+            "molecula": molecula.title(),
+            "farmacia": "Drogaria São Paulo",
+            "produto": p["productName"],
+            "laboratorio": p.get("brand"),
+            "preco": oferta["Price"],
+            "preco_de": oferta["ListPrice"],
+            "link": p["link"],
+        })
+    return itens`,
       },
       {
-        label: 'Interface Streamlit',
+        label: 'HTML da Ultrafarma',
         language: 'python',
-        description: 'Painel com filtros, tabela comparativa e exportação para Excel.',
-        snippet: `import streamlit as st
-import pandas as pd
+        description:
+          'Extração direta do HTML da página de busca com seletores, sem navegador automatizado e sem IA.',
+        snippet: `from selectolax.parser import HTMLParser
 
-st.set_page_config(page_title="Pesquisa de Preços", layout="wide")
-st.title("Pesquisa de Preços")
+def buscar_ultrafarma(molecula: str) -> list[dict]:
+    html = httpx.get(ULTRAFARMA_BUSCA, params={"q": molecula}, timeout=20).text
+    arvore = HTMLParser(html)
 
-df = carregar_base()
+    itens = []
+    for card in arvore.css(".product-item"):
+        nome = card.css_first(".product-name")
+        preco = card.css_first(".product-price-sell")
+        if not nome or not preco:
+            continue
+        de = card.css_first(".product-price-old")
+        itens.append({
+            "molecula": molecula.title(),
+            "farmacia": "Ultrafarma",
+            "produto": nome.text(strip=True),
+            "preco": normalizar_preco(preco.text()),
+            "preco_de": normalizar_preco(de.text()) if de else None,
+        })
+    return itens`,
+      },
+      {
+        label: 'Excel pronto para uso',
+        language: 'python',
+        description:
+          'Consolida as fontes, calcula desconto e preço unitário e gera a planilha formatada.',
+        snippet: `def gerar_excel(registros: list[dict]) -> bytes:
+    df = pd.DataFrame(registros)
+    df["desconto"] = 1 - df["preco"] / df["preco_de"]
+    df["preco_unit"] = df["preco"] / df["quantidade"].fillna(1)
+    df = df.sort_values(["molecula", "preco"])
 
-col1, col2 = st.columns(2)
-produtos = col1.multiselect("Produto", sorted(df["produto"].unique()))
-periodo = col2.date_input("Período", [])
-
-filtrado = df.copy()
-if produtos:
-    filtrado = filtrado[filtrado["produto"].isin(produtos)]
-if len(periodo) == 2:
-    filtrado = filtrado[filtrado["data_coleta"].between(*periodo)]
-
-a, b, c = st.columns(3)
-a.metric("Itens coletados", len(filtrado))
-b.metric("Preço médio", f"R$ {filtrado['preco'].mean():,.2f}")
-c.metric("Fontes", filtrado["fonte"].nunique())
-
-st.dataframe(filtrado, use_container_width=True)
-
-st.download_button(
-    "Exportar para Excel",
-    data=exportar_excel(filtrado),
-    file_name="pesquisa_precos.xlsx",
-)`,
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine="openpyxl") as xls:
+        df.to_excel(xls, sheet_name="Precos", index=False)
+        resumo = df.groupby("molecula")["preco"].agg(["min", "mean", "max"])
+        resumo.to_excel(xls, sheet_name="Resumo")
+    return buffer.getvalue()`,
       },
     ],
 
     stackDetail: [
-      { name: 'Python', use: 'Orquestração, tratamento e regras de negócio' },
-      { name: 'Playwright', use: 'Navegação e extração em páginas dinâmicas' },
-      { name: 'pandas', use: 'Normalização, deduplicação e consolidação' },
-      { name: 'Streamlit', use: 'Interface web com filtros e exportação' },
-      { name: '.env', use: 'Configuração e credenciais fora do código' },
+      { name: 'React', use: 'Interface de busca, cartões-resumo e tabela com filtros' },
+      { name: 'Python', use: 'Coleta, normalização e regras de negócio' },
+      { name: 'CMED/Anvisa', use: 'Base oficial de preço máximo ao consumidor (PMC)' },
+      { name: 'APIs & HTML', use: 'API da Drogaria São Paulo e parsing do HTML da Ultrafarma' },
+      { name: 'Excel', use: 'Planilha consolidada pronta para uso' },
+      { name: 'Vercel', use: 'Deploy, acesso por login e cache' },
+    ],
+  },
+
+  {
+    slug: 'leads-juridico',
+    title: 'Radar de Leads com IA',
+    year: '2026',
+    category: 'IA',
+    badge: 'Novo',
+    cover: '/assets/leads-02.png',
+    role: 'Concepção, desenvolvimento e integração com IA',
+    summary:
+      'Sistema interno para uma consultoria jurídica que centraliza os leads de todos os canais, usa IA para classificar área do direito, urgência e chance de conversão, e garante que nenhum contato fique sem resposta.',
+    highlights: [
+      'Triagem automática por IA: área, urgência, resumo e score de conversão',
+      'Pipeline visual do primeiro contato até o contrato assinado',
+      'Alertas de prazo e de leads esfriando, com sugestão de follow-up',
+    ],
+    tags: ['IA', 'Python', 'React', 'CRM', 'Automação'],
+
+    problem:
+      'Os contatos de potenciais clientes chegavam por WhatsApp, site, Instagram e indicação, cada um em um lugar. Não havia como saber quais casos eram mais urgentes, quem estava atendendo cada pessoa ou quantos leads tinham ficado sem retorno — e em direito, demorar a responder pode significar perder um prazo do cliente.',
+    solution:
+      'Construí um sistema interno que recebe os leads de todos os canais em um só lugar. Assim que um lead entra, a IA lê a mensagem, identifica a área do direito, a urgência, os documentos citados e gera um resumo e um score de conversão. O time trabalha em um pipeline visual, recebe alertas de prazo e de leads parados, e acompanha o funil num painel de captação.',
+
+    process: [
+      {
+        title: 'Entendimento do atendimento',
+        text: 'Mapeei com o time por onde os leads chegavam, quais perguntas eram feitas na triagem e em que ponto os contatos se perdiam.',
+      },
+      {
+        title: 'Entrada unificada',
+        text: 'Integração dos canais de entrada em uma base única, criando o lead automaticamente com origem, horário e histórico de conversa.',
+      },
+      {
+        title: 'Triagem com IA',
+        text: 'Prompt estruturado que devolve JSON com área, subárea, urgência, documentos citados, resumo e score — validado antes de gravar, para nunca quebrar o fluxo.',
+      },
+      {
+        title: 'Pipeline e alertas',
+        text: 'Kanban por etapa (novo, qualificado, em contato, consulta agendada, contratado), com alertas de prazo e de leads sem retorno há mais de 48h.',
+      },
+      {
+        title: 'Painel de captação',
+        text: 'Funil do mês, conversão por área, origem dos leads, tempo de primeira resposta e lista de prioridades sugeridas pela IA.',
+      },
+    ],
+
+    results: [
+      { value: 'Minutos', label: 'tempo de primeira resposta, antes medido em horas' },
+      { value: '1 lugar só', label: 'todos os canais de entrada centralizados' },
+      { value: 'Nenhum lead esquecido', label: 'alertas automáticos de follow-up' },
+    ],
+
+    gallery: [
+      { src: '/assets/leads-01.png', caption: 'Painel de captação: funil, conversão por área e prioridades da IA.' },
+      { src: '/assets/leads-02.png', caption: 'Pipeline de leads ordenado pelo score da IA.' },
+      { src: '/assets/leads-03.png', caption: 'Detalhe do lead com a conversa e a análise da IA.' },
+    ],
+
+    code: [
+      {
+        label: 'Triagem do lead com IA',
+        language: 'python',
+        description:
+          'A IA recebe a conversa e devolve um JSON estruturado, que é validado antes de ser salvo.',
+        snippet: `from pydantic import BaseModel, Field
+
+class Triagem(BaseModel):
+    area: str                      # Trabalhista, Família, Previdenciário...
+    subarea: str
+    urgencia: str                  # baixa | media | alta
+    documentos: list[str]
+    alerta_prazo: bool
+    resumo: str
+    score: int = Field(ge=0, le=100)
+
+PROMPT = """Você faz a triagem de leads de uma consultoria jurídica.
+Leia a conversa e responda APENAS com JSON no formato:
+{schema}
+Não dê orientação jurídica; apenas classifique o caso.
+
+Conversa:
+{conversa}"""
+
+def triar_lead(conversa: str) -> Triagem:
+    resposta = cliente_llm.gerar(
+        PROMPT.format(schema=Triagem.model_json_schema(), conversa=conversa)
+    )
+    return Triagem.model_validate_json(resposta)`,
+      },
+      {
+        label: 'Prioridade do pipeline',
+        language: 'python',
+        description:
+          'O score da IA é combinado com regras de negócio para ordenar quem deve ser atendido primeiro.',
+        snippet: `from datetime import datetime, timedelta
+
+def prioridade(lead: dict) -> float:
+    p = lead["score_ia"]
+
+    if lead["alerta_prazo"]:
+        p += 25
+    if lead["urgencia"] == "alta":
+        p += 10
+
+    sem_resposta = datetime.now() - lead["ultima_interacao"]
+    if sem_resposta > timedelta(hours=48):
+        p += 15            # lead esfriando: sobe na fila
+
+    return min(p, 150)
+
+fila = sorted(leads_ativos(), key=prioridade, reverse=True)`,
+      },
+      {
+        label: 'Alerta de follow-up',
+        language: 'sql',
+        description: 'Consulta usada pela rotina que avisa o responsável sobre leads parados.',
+        snippet: `SELECT l.id,
+       l.nome,
+       l.area,
+       l.score_ia,
+       u.email AS responsavel,
+       NOW() - l.ultima_interacao AS tempo_parado
+FROM   leads l
+JOIN   usuarios u ON u.id = l.responsavel_id
+WHERE  l.etapa NOT IN ('contratado', 'descartado')
+  AND  l.ultima_interacao < NOW() - INTERVAL '48 hours'
+ORDER  BY l.score_ia DESC;`,
+      },
+    ],
+
+    stackDetail: [
+      { name: 'Python', use: 'Regras de negócio, integrações e rotinas agendadas' },
+      { name: 'LLM (IA)', use: 'Triagem, resumo, score e sugestão de mensagem' },
+      { name: 'React', use: 'Pipeline, detalhe do lead e painel de captação' },
+      { name: 'PostgreSQL', use: 'Base única de leads, etapas e histórico' },
+      { name: 'Pydantic', use: 'Validação da resposta da IA antes de gravar' },
     ],
   },
 
@@ -273,6 +457,8 @@ st.download_button(
     slug: 'dashboard-budget',
     title: 'Dashboard de Budget de Novos Produtos',
     year: '2026',
+    category: 'BI',
+    cover: '/assets/budget-01.png',
     role: 'Modelagem, medidas e design do painel',
     summary:
       'Painel de acompanhamento do orçamento de novos produtos, com visão de planejado x realizado e detalhamento por projeto.',
@@ -417,6 +603,8 @@ SWITCH (
     slug: 'automacao-pagamentos',
     title: 'Automação de Solicitação de Pagamento',
     year: '2026',
+    category: 'Automação',
+    cover: '/assets/pagamentos-02.png',
     role: 'Desenho do processo e construção do fluxo',
     summary:
       'Fluxo digital ponta a ponta que padronizou a abertura de solicitações de pagamento, com rastreabilidade e redução de retrabalho.',
@@ -547,6 +735,7 @@ concat(
     slug: 'inteligencia-de-mercado',
     title: 'Inteligência de Mercado Farmacêutico',
     year: '2025 — 2026',
+    category: 'Dados',
     role: 'Análise, consolidação e apresentação',
     summary:
       'Análises recorrentes de bases PMB e IQVIA para leitura de canais, evolução de moléculas, lançamentos e posicionamento competitivo.',
