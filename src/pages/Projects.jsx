@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import PageTransition from '../components/PageTransition.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
@@ -53,18 +53,16 @@ export default function Projects() {
             })}
           </div>
 
-          <motion.div layout className="mt-10 grid gap-6 md:grid-cols-2">
-            <AnimatePresence mode="popLayout">
-              {visiveis.map((p, i) => (
-                <ProjectCard
-                  key={p.slug}
-                  project={p}
-                  index={projects.indexOf(p)}
-                  featured={filtro === TODOS && i === 0}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          <div key={filtro} className="mt-10 grid gap-6 md:grid-cols-2">
+            {visiveis.map((p, i) => (
+              <ProjectCard
+                key={p.slug}
+                project={p}
+                index={projects.indexOf(p)}
+                featured={filtro === TODOS && i === 0}
+              />
+            ))}
+          </div>
         </LayoutGroup>
       </section>
     </PageTransition>

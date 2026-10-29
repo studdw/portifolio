@@ -56,11 +56,8 @@ const ProjectCard = forwardRef(function ProjectCard({ project, index, featured =
   return (
     <motion.div
       ref={ref}
-      layout
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.96 }}
-      viewport={{ once: true, margin: '-60px' }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: (index % 2) * 0.08 }}
       className={`h-full ${featured ? 'md:col-span-2' : ''}`}
     >
