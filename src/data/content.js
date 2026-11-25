@@ -20,6 +20,7 @@ export const stack = [
   'SQL',
   'Git',
   'Github',
+  'Supabase',
   'Power BI / DAX',
   'Power Automate',
   'Excel Avançado',
@@ -42,18 +43,18 @@ export const stackGroups = [
     id: 'dev',
     label: 'Desenvolvimento',
     descricao: 'Da automação de coleta à interface que o time usa.',
-    items: ['Python', 'Java', 'Streamlit', 'Playwright', 'Pandas'],
+    items: ['Python', 'Java', 'React', 'Tailwind CSS', 'Streamlit', 'Playwright', 'Pandas'],
   },
   {
     id: 'plataformas',
     label: 'Plataformas',
     descricao: 'Onde os processos rodam e os dados moram.',
-    items: ['Power Automate', 'SharePoint', 'Microsoft Forms', 'SAP', 'AWS', 'Microsoft 365', 'Vercel'],
+    items: ['Power Automate', 'SharePoint', 'Microsoft Forms', 'Microsoft Teams', 'Supabase', 'SAP', 'AWS', 'Microsoft 365', 'Vercel'],
   },
 ]
 
 export const stats = [
-  { value: '5', label: 'projetos de dados, IA e automação entregues' },
+  { value: '6', label: 'projetos de dados, IA e automação entregues' },
   { value: '3', label: 'frentes: BI, automação e inteligência de mercado' },
   { value: '100%', label: 'foco em processo que roda sozinho' },
 ]
@@ -312,6 +313,141 @@ def buscar_ultrafarma(molecula: str) -> list[dict]:
       { name: 'APIs & HTML', use: 'API da Drogaria São Paulo e parsing do HTML da Ultrafarma' },
       { name: 'Excel', use: 'Planilha consolidada pronta para uso' },
       { name: 'Vercel', use: 'Deploy, acesso por login e cache' },
+    ],
+  },
+
+  {
+    slug: 'sprint-relampago',
+    title: 'Sprint Relâmpago: jogo de Scrum online',
+    year: '2026',
+    category: 'Desenvolvimento',
+    badge: 'Novo',
+    cover: '/assets/sprint-02.jpg',
+    role: 'Projeto em grupo: concepção do jogo e desenvolvimento da versão digital',
+    summary:
+      'Jogo multiplayer em tempo real para praticar Scrum e as ferramentas do semestre (SIPOC, fluxograma, mapa de empatia, AS-IS / TO-BE). Cada equipe vira o Time Scrum de uma startup, recebe um tema surpresa e resolve suas cartas em uma Sprint de 5 minutos, direto no navegador.',
+    highlights: [
+      'Partida completa: entrada na sala, Planning, Sprint, Review e placar final no telão',
+      'Todas as telas atualizadas ao mesmo tempo, com cronômetro, Daily e mudança de requisito',
+      '10 cartas, uma ferramenta do semestre em cada, com correção automática em 8 delas',
+    ],
+    tags: ['React', 'JavaScript', 'Tailwind CSS', 'Supabase', 'Tempo real', 'Vercel'],
+
+    problem:
+      'O desafio do curso no SENAI era criar um jogo para praticar metodologias ágeis e revisar as ferramentas vistas no semestre. A primeira versão do nosso grupo foi em papel, o que limitava a dinâmica: sem cronômetro compartilhado, sem correção automática e sem placar entre as equipes.',
+    solution:
+      'Levei o jogo além do papel e construí a versão digital. A sala inteira entra pelo celular ou computador com o código do telão, escolhe PO e Scrum Master, e cada pessoa recebe uma carta. Cronômetro, Daily, mudança de requisito, notas e placar são sincronizados em todas as telas, com banco no Supabase e deploy na Vercel, sem custo e sem instalar nada.',
+
+    process: [
+      {
+        title: 'Da versão em papel ao digital',
+        text: 'Partimos das regras do jogo em papel e decidimos o que precisava virar tela: sala com código, papéis, cartas, cronômetro e placar.',
+      },
+      {
+        title: 'Fluxo da partida',
+        text: 'Cinco momentos: Entrada, Planning (a roleta sorteia o tema e o PO distribui as cartas), Sprint de 5 minutos, Review com Retrospectiva e Resultado.',
+      },
+      {
+        title: 'Backlog de 10 cartas',
+        text: 'Cada carta aplica uma ferramenta do semestre ao tema da rodada. Oito são de arrastar, ligar e ordenar, com correção automática; as duas de desenho recebem nota da Empresa.',
+      },
+      {
+        title: 'Tempo real e segurança',
+        text: 'O Supabase mantém todas as telas atualizadas. O gabarito fica protegido no servidor e a pergunta do PO é anônima de verdade.',
+      },
+      {
+        title: 'Pontuação e deploy',
+        text: 'A nota combina desempenho nas cartas, Meta da Sprint, Daily e Retrospectiva. O site roda na Vercel e há um plano B: se a internet cair, aplicamos a versão em papel.',
+      },
+    ],
+
+    results: [
+      { value: '5 minutos', label: 'por Sprint, com equipes de 5 a 6 pessoas' },
+      { value: '10 cartas', label: 'cobrindo Scrum, mapeamento de processos e Design Thinking' },
+      { value: 'R$ 0', label: 'planos gratuitos da Vercel e do Supabase' },
+    ],
+
+    gallery: [
+      { src: '/assets/sprint-01.jpg', caption: 'Tema da rodada sorteado pela roleta: problema, missão da equipe e ferramentas.' },
+      { src: '/assets/sprint-02.jpg', caption: 'Carta de SIPOC durante a Sprint, com cronômetro e quadro da equipe.' },
+      { src: '/assets/sprint-03.jpg', caption: 'Mudança de requisito aos 2:00 e Daily: o PO decide quem troca de carta.' },
+      { src: '/assets/sprint-04.jpg', caption: 'Resultado: pódio e placar com cartas, Meta, Daily e Retrospectiva.' },
+    ],
+
+    code: [
+      {
+        label: 'Pontuação da equipe',
+        language: 'javascript',
+        description:
+          'Regras do placar em uma função só: média das notas das cartas (a carta da mudança de requisito vale o dobro) mais os bônus. Versão simplificada.',
+        snippet: `export function pontuarEquipe({ cartas, metaCumprida, todosFizeramDaily, todosFizeramRetro }) {
+  const pesoTotal = cartas.reduce((s, c) => s + (c.dobro ? 2 : 1), 0)
+  const somaNotas = cartas.reduce((s, c) => s + c.nota * (c.dobro ? 2 : 1), 0)
+
+  // nota de 0 a 5 por carta  ->  0 a 50 pontos
+  const pontosCartas = pesoTotal ? (somaNotas / pesoTotal) * 10 : 0
+
+  return (
+    pontosCartas +
+    (metaCumprida ? 5 : 0) +
+    (todosFizeramDaily ? 2 : 0) +
+    (todosFizeramRetro ? 2 : 0)
+  )
+}`,
+      },
+      {
+        label: 'Tempo real com Supabase',
+        language: 'javascript',
+        description:
+          'Cada tela assina as mudanças da sala; quando algo muda no banco, o estado local é atualizado. Nomes de tabela simplificados.',
+        snippet: `import { useEffect, useState } from 'react'
+import { supabase } from './supabase'
+
+export function useSala(codigo) {
+  const [sala, setSala] = useState(null)
+
+  useEffect(() => {
+    supabase.from('salas').select('*').eq('codigo', codigo).single()
+      .then(({ data }) => setSala(data))
+
+    const canal = supabase
+      .channel(\`sala-\${codigo}\`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'salas', filter: \`codigo=eq.\${codigo}\` },
+        ({ new: atual }) => setSala(atual),
+      )
+      .subscribe()
+
+    return () => supabase.removeChannel(canal)
+  }, [codigo])
+
+  return sala
+}`,
+      },
+      {
+        label: 'Eventos da Sprint',
+        language: 'javascript',
+        description:
+          'Linha do tempo da Sprint de 5 minutos: o que dispara em cada momento.',
+        snippet: `export const SPRINT = {
+  duracaoSeg: 5 * 60,
+  eventos: [
+    { aos: 2 * 60, tipo: 'mudanca_requisito' }, // uma carta passa a valer o dobro
+    { aos: 3 * 60, tipo: 'daily' },             // feito, fazendo ou impedimento
+  ],
+}
+
+export const STATUS_DAILY = ['feito', 'fazendo', 'impedimento']`,
+      },
+    ],
+
+    stackDetail: [
+      { name: 'React', use: 'Telas do jogo, cartas interativas e quadro da equipe' },
+      { name: 'JavaScript', use: 'Regras da partida, pontuação e sincronização' },
+      { name: 'Tailwind CSS', use: 'Interface responsiva, com dois temas: branco e vermelho, azul e preto' },
+      { name: 'Supabase', use: 'Banco de dados e tempo real entre todas as telas' },
+      { name: 'Vercel', use: 'Hospedagem: os alunos só abrem o endereço no navegador' },
     ],
   },
 
@@ -604,102 +740,153 @@ SWITCH (
     title: 'Automação de Solicitação de Pagamento',
     year: '2026',
     category: 'Automação',
-    cover: '/assets/pagamentos-02.png',
-    role: 'Desenho do processo e construção do fluxo',
+    badge: 'v2 no ar',
+    cover: '/assets/pagamentos-04.png',
+    role: 'Desenho do processo e construção dos fluxos',
     summary:
-      'Fluxo digital ponta a ponta que padronizou a abertura de solicitações de pagamento, com rastreabilidade e redução de retrabalho.',
+      'Fluxo digital ponta a ponta que padronizou a abertura de solicitações e agora acompanha o pedido até o fim: status atualizado em tempo real, confirmação por card no Teams e leitura automática dos e-mails do Coupa.',
     highlights: [
-      'Formulário em Microsoft Forms como entrada única',
-      'Orquestração de aprovações em Power Automate',
-      'Registro centralizado em SharePoint',
+      'Status em tempo real: enviado, aguardando confirmação, confirmado, recusado e pedido feito',
+      'Card no Teams que acompanha o pedido e só fecha quando ele é feito',
+      'Fluxo que lê os e-mails de aprovação e rejeição do Coupa e atualiza o item sozinho',
     ],
-    tags: ['Power Automate', 'Forms', 'SharePoint', 'Processos'],
+    tags: ['Power Automate', 'Forms', 'SharePoint', 'Teams', 'Coupa', 'Processos'],
 
     problem:
-      'As solicitações de pagamento chegavam por e-mail, cada uma em um formato. Faltava informação, o pedido ficava parado sem ninguém saber com quem estava e não existia registro consolidado do que já havia sido solicitado.',
+      'As solicitações de pagamento chegavam por e-mail, cada uma em um formato. Faltava informação, o pedido ficava parado sem ninguém saber com quem estava e não existia registro consolidado do que já havia sido solicitado. Mesmo depois da primeira automação, o solicitante ainda não via em que etapa o pedido estava, e o retorno do Coupa precisava ser acompanhado à mão.',
     solution:
-      'Criei uma entrada única em formulário com campos obrigatórios, um fluxo de aprovação automatizado que roteia o pedido para o responsável correto e notifica o solicitante a cada etapa, e um registro centralizado em lista do SharePoint que serve de histórico e base para acompanhamento.',
+      'O formulário continua como entrada única, e cada solicitação gera um item de status na lista do SharePoint. Um card no Teams pede a confirmação da abertura da RC (requisição de compra), e um segundo fluxo lê os e-mails do Coupa, extrai o número da RC, o número do PO (pedido de compra) e o motivo de reprovação, e atualiza o item. O solicitante é avisado a cada mudança e acompanha o status em tempo real.',
+
+    versions: [
+      {
+        version: 'v1',
+        date: 'Primeira versão',
+        status: 'anterior',
+        title: 'Formulário, aprovação e registro no SharePoint',
+        text:
+          'Entrada padronizada em Forms, aprovação orquestrada no Power Automate e registro centralizado em lista do SharePoint, com aviso ao solicitante a cada decisão.',
+        points: [
+          'Formulário com campos obrigatórios',
+          'Aprovação com caminhos de aprovado e reprovado',
+          'Lista do SharePoint como histórico',
+          'Status: em aprovação, aprovado e reprovado',
+        ],
+        image: '/assets/pagamentos-02.png',
+      },
+      {
+        version: 'v2',
+        date: 'Versão atual',
+        status: 'no ar',
+        title: 'Status em tempo real, card no Teams e retorno do Coupa',
+        text:
+          'O fluxo passou a acompanhar o pedido até ele ser feito: confirmação da RC por card no Teams e atualização automática do status a partir dos e-mails do Coupa.',
+        points: [
+          'Cinco status: enviado, aguardando confirmação, confirmado, recusado e pedido feito',
+          'Card no Teams para confirmar ou cancelar a abertura da RC',
+          'Leitura dos e-mails do Coupa (RC, PO e motivo de reprovação)',
+          'Card aberto até o pedido ser feito',
+        ],
+        image: '/assets/pagamentos-05.png',
+      },
+    ],
+
+    changes: [
+      { label: 'Status', before: 'Em aprovação, aprovado e reprovado', after: 'Enviado, aguardando confirmação, confirmado, recusado e pedido feito' },
+      { label: 'Atualização', before: 'A cada decisão do aprovador', after: 'Em tempo real, inclusive a partir do Coupa' },
+      { label: 'Confirmação', before: 'Aprovação padrão do Power Automate', after: 'Card no Teams com confirmar ou cancelar' },
+      { label: 'Fim do ciclo', before: 'Fluxo terminava na decisão', after: 'Card acompanha o pedido até ele ser feito' },
+      { label: 'Retorno do Coupa', before: 'Acompanhamento manual', after: 'E-mail lido e item atualizado automaticamente' },
+    ],
 
     process: [
       {
-        title: 'Mapeamento do processo atual',
-        text: 'Levantei como o pedido nascia, por quantas mãos passava e onde ele costumava travar.',
+        title: 'Entrada e checagem do anexo',
+        text: 'Cada resposta do Forms dispara o fluxo. Uma condição verifica o anexo: sem foto, o fluxo envia um e-mail; com foto, analisa o JSON da resposta e obtém o conteúdo do arquivo pelo caminho.',
       },
       {
-        title: 'Entrada padronizada',
-        text: 'Formulário com campos obrigatórios e validação, eliminando o pedido incompleto na origem.',
+        title: 'Registro do status',
+        text: 'Em paralelo, o fluxo cria o item na lista de status do SharePoint, que passa a ser a fonte única de acompanhamento.',
       },
       {
-        title: 'Fluxo de aprovação',
-        text: 'Power Automate cria o item no SharePoint, dispara a aprovação e trata os caminhos de aprovado e reprovado.',
+        title: 'Confirmação no Teams',
+        text: 'O fluxo monta um card e o envia no Teams ao responsável pela abertura da RC. Se ele confirma, o status vai para RC aberta e o solicitante é avisado; se cancela, o status vai para cancelado.',
       },
       {
-        title: 'Notificações',
-        text: 'Comunicação automática ao solicitante e ao aprovador em cada mudança de status.',
+        title: 'Retorno do Coupa',
+        text: 'Um segundo fluxo é disparado quando chega um e-mail do Coupa. Se for de aprovação ou rejeição, extrai do assunto e do texto o número da RC, o número do PO e o motivo de reprovação.',
       },
       {
-        title: 'Acompanhamento',
-        text: 'Lista do SharePoint com visão de status, servindo como histórico e base de consulta.',
+        title: 'Atualização e aviso',
+        text: 'O fluxo busca o item na lista pela referência extraída; se encontra, atualiza o status e avisa o solicitante.',
       },
     ],
 
     results: [
+      { value: 'Status ao vivo', label: 'do envio até o pedido feito' },
+      { value: 'Sem digitação', label: 'RC, PO e motivo extraídos do e-mail do Coupa' },
       { value: 'Entrada única', label: 'fim do pedido solto por e-mail' },
-      { value: 'Rastreável', label: 'status visível em todas as etapas' },
-      { value: 'Menos retrabalho', label: 'campos obrigatórios na origem' },
     ],
 
     gallery: [
       { src: '/assets/pagamentos-01.png', caption: 'Formulário de solicitação com campos obrigatórios.' },
-      { src: '/assets/pagamentos-02.png', caption: 'Fluxo de aprovação montado no Power Automate.' },
+      { src: '/assets/pagamentos-04.png', caption: 'v2 — gatilho do Forms, checagem do anexo e criação do item de status.' },
+      { src: '/assets/pagamentos-05.png', caption: 'v2 — card no Teams e decisão: RC aberta ou cancelado.' },
+      { src: '/assets/pagamentos-06.png', caption: 'v2 — fluxo disparado pelo e-mail do Coupa.' },
+      { src: '/assets/pagamentos-07.png', caption: 'v2 — extração de RC, PO e motivo, busca do item e atualização do status.' },
       { src: '/assets/pagamentos-03.png', caption: 'Lista de acompanhamento no SharePoint com status.' },
+      { src: '/assets/pagamentos-02.png', caption: 'v1 — fluxo de aprovação (versão anterior).' },
     ],
 
     code: [
       {
-        label: 'Estrutura do fluxo',
+        label: 'Fluxo 1: da solicitação ao Teams',
         language: 'text',
-        description: 'Desenho lógico do fluxo construído no Power Automate.',
+        description: 'Desenho lógico do fluxo disparado pelo Forms.',
         snippet: `GATILHO
   └─ Quando uma nova resposta é enviada (Microsoft Forms)
 
 AÇÕES
-  1. Obter detalhes da resposta
-  2. Criar item na lista do SharePoint  → Status: "Em aprovação"
-  3. Iniciar e aguardar uma aprovação   → Aprovador definido pela área
-  4. Condição: Resultado = "Approve"?
-
-     ├─ SIM
-     │    ├─ Atualizar item  → Status: "Aprovado"
-     │    ├─ Enviar e-mail ao solicitante
-     │    └─ Notificar financeiro para processamento
-     │
-     └─ NÃO
-          ├─ Atualizar item  → Status: "Reprovado"
-          └─ Enviar e-mail ao solicitante com o comentário do aprovador`,
+  1. Obter os detalhes da resposta
+  2. Em paralelo:
+     ├─ Criar item na Lista de Status
+     └─ Condição: tem foto?
+          ├─ NÃO → Enviar um e-mail (V2) "sem foto"
+          └─ SIM → Analisar JSON → Compor → Obter conteúdo do arquivo pelo caminho
+  3. Montar card Teams
+  4. Card Teams para o responsável pela RC
+  5. Condição: RC confirmada?
+     ├─ SIM → Status "RC aberta" + Avisar solicitante
+     └─ NÃO → Condição: cancelou?
+                └─ SIM → Status "Cancelado"`,
       },
       {
-        label: 'Definição do aprovador',
+        label: 'Fluxo 2: retorno do Coupa',
         language: 'text',
-        description: 'Expressão usada para rotear a aprovação conforme a área informada no formulário.',
-        snippet: `// Roteamento do aprovador conforme a área do solicitante
-if(
-  equals(triggerOutputs()?['body/area'], 'Novos Produtos'),
-  variables('aprovadorNovosProdutos'),
-  if(
-    equals(triggerOutputs()?['body/area'], 'Marketing'),
-    variables('aprovadorMarketing'),
-    variables('aprovadorPadrao')
-  )
-)
+        description: 'Fluxo disparado quando chega o e-mail do Coupa, que atualiza o status do pedido.',
+        snippet: `GATILHO
+  └─ Quando chegar e-mail do Coupa (Outlook)
 
-// Identificador único do pedido
-concat(
-  'SP-',
-  formatDateTime(utcNow(), 'yyyyMM'),
-  '-',
-  outputs('Criar_item')?['body/ID']
-)`,
+AÇÕES
+  1. Condição: é e-mail de aprovação ou rejeição?
+     └─ SIM
+          ├─ Status novo
+          ├─ Números do assunto → Número RC
+          ├─ Texto do e-mail → RefId extraído
+          ├─ Números após "Pedido" → Número PO
+          ├─ Motivo da reprovação
+          ├─ Buscar item na lista
+          └─ Condição: achou o item?
+               └─ SIM → Atualizar status do item + Avisar solicitante`,
+      },
+      {
+        label: 'Etapas de status',
+        language: 'text',
+        description: 'Etapas que o solicitante acompanha, do envio até o pedido feito.',
+        snippet: `Enviado               → solicitação registrada na lista
+Aguardando confirmação → card enviado no Teams
+Confirmado            → RC aberta
+Recusado              → solicitação recusada
+Pedido feito          → PO gerado no Coupa; card fecha`,
       },
       {
         label: 'Campos da lista SharePoint',
@@ -711,23 +898,23 @@ concat(
 |------------------|-------------------|---------------------------------|
 | ID Solicitação   | Texto             | Gerado pelo fluxo (SP-AAAAMM-n) |
 | Solicitante      | Pessoa            | Vem do Forms                    |
-| Área             | Escolha           | Define o aprovador              |
+| Área             | Escolha           |                                 |
 | Fornecedor       | Texto             | Obrigatório                     |
 | Valor            | Moeda             | Obrigatório                     |
 | Centro de Custo  | Texto             | Obrigatório                     |
 | Descrição        | Texto multilinha  | Justificativa do pedido         |
 | Anexo            | Anexo             | Nota / orçamento                |
-| Status           | Escolha           | Em aprovação / Aprovado / Reprovado |
-| Aprovador        | Pessoa            | Preenchido pelo fluxo           |
-| Data Aprovação   | Data e hora       | Preenchido pelo fluxo           |`,
+| Status           | Escolha           | Atualizado pelos fluxos         |`,
       },
     ],
 
     stackDetail: [
       { name: 'Microsoft Forms', use: 'Entrada padronizada com campos obrigatórios' },
-      { name: 'Power Automate', use: 'Orquestração, aprovações e notificações' },
-      { name: 'SharePoint', use: 'Registro centralizado e acompanhamento' },
-      { name: 'Outlook', use: 'Comunicação automática a cada etapa' },
+      { name: 'Power Automate', use: 'Orquestração, leitura de e-mails e atualização de status' },
+      { name: 'SharePoint', use: 'Registro centralizado e status do pedido' },
+      { name: 'Microsoft Teams', use: 'Card de confirmação da abertura da RC' },
+      { name: 'Outlook', use: 'Gatilho dos e-mails do Coupa e avisos ao solicitante' },
+      { name: 'Coupa', use: 'Sistema de compras: origem de RC, PO e motivo de reprovação' },
     ],
   },
 
@@ -1021,11 +1208,11 @@ export const skillGroups = [
   },
   {
     title: 'Desenvolvimento',
-    items: ['Python', 'React', 'Vite', 'Streamlit', 'Playwright', 'HTML / CSS'],
+    items: ['Python', 'React', 'Vite', 'Tailwind CSS', 'Streamlit', 'Playwright', 'HTML / CSS'],
   },
   {
     title: 'Automação & Plataformas',
-    items: ['Power Automate', 'Microsoft Forms', 'SharePoint', 'SAP', 'Microsoft 365', 'AWS'],
+    items: ['Power Automate', 'Microsoft Forms', 'SharePoint', 'Microsoft Teams', 'Supabase', 'SAP', 'Microsoft 365', 'AWS'],
   },
   {
     title: 'Negócio',
